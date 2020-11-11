@@ -217,6 +217,7 @@ function Planets() {
 
   return (
     <div className='App'>
+      <h1>Star Wars Planets</h1>
       <Grid data={data} />
     </div>
   );

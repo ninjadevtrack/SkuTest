@@ -1,0 +1,1 @@
+export const LOAD_PLANETS = 'LOAD_PlANETS';

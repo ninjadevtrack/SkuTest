@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "components/*": ["./components/*"],
+            "containers/*": ["./containers/*"],
+            "core/*": ["./core/*"],
+            "utils/*": ["./utils/*"],
+        },
+        "target": "es2015",
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": ["build", "node_modules"]
+}
