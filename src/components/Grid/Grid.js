@@ -11,11 +11,11 @@ function Grid({data: {header = [], values = [], actions = []}}) {
       </thead>
       <tbody>
         {values.map((row, index) => (
-          <tr key={index}>
+          <tr key={'column_1' + index}>
             {header.map((colName) => <td key={colName}>{row[colName]}</td>)}
             {!!actions.length && 
               <td className='gridActions'>
-                {actions.map(({label, action}) => <button onClick={() => action(row)}>{label}</button>)}
+                {actions.map(({label, action}) => <button  key={'action_' +  action} onClick={() => action(row)}>{label}</button>)}
               </td>
             }
           </tr>
