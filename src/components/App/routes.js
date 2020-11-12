@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
-import Planets from '../Planets';
+import Planets from 'components/Planets';
 
 const Routes = () => {
   return (

@@ -1,5 +1,5 @@
-import * as fetchPlanets from './Planets/actions';
+import * as planets from './Planets/actions';
 
 export default {
-  fetchPlanets,
+  planets,
 };

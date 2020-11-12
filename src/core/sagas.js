@@ -1,5 +1,5 @@
-import planetsSagas from './Planets/sagas';
+import * as planets from './Planets/sagas';
 
 export default {
-  planetsSagas,
+  planets,
 };
