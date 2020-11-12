@@ -1,20 +1,23 @@
-import React from 'react';
-import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
-import saga from './saga';
-import routes from './routes';
 
-const App = () => (
-  <div className="App">
-    <Helmet>
-      <meta name="description" content="Check Conversion" />
-      <title>Check Conversion</title>
-    </Helmet>
-    {routes()}
-  </div>
-);
+import { fetchPlanets } from 'core/App/actions';
+import { makeSelectPlanets } from 'core/App/selectors';
+import saga from 'core/App/saga';
 
+import App from 'components/App';
+
+const mapStateToProps = createStructuredSelector({
+  planets: makeSelectPlanets(),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchPlanets: () => dispatch(fetchPlanets()),
+});
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const withSaga = injectSaga({ key: 'app', saga });
-export default compose(withRouter, withSaga)(App);
+
+export default compose(withRouter, withSaga, withConnect)(App);

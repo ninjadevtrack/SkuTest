@@ -1,23 +1,32 @@
+import React from 'react';
 import './Grid.css';
 
-function Grid({data: {header = [], values = [], actions = []}}) {
+function Grid({ data: { header = [], values = [], actions = [] } }) {
   return (
-    <table className='gridTable'>
+    <table className="gridTable">
       <thead>
         <tr>
-          {header.map(colName => <th key={colName}>{colName}</th>)}
+          {header.map((colName) => (
+            <th key={colName}>{colName}</th>
+          ))}
           {!!actions.length && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
         {values.map((row, index) => (
           <tr key={'column_1' + index}>
-            {header.map((colName) => <td key={colName}>{row[colName]}</td>)}
-            {!!actions.length && 
-              <td className='gridActions'>
-                {actions.map(({label, action}) => <button  key={'action_' +  action} onClick={() => action(row)}>{label}</button>)}
+            {header.map((colName) => (
+              <td key={colName}>{row[colName]}</td>
+            ))}
+            {!!actions.length && (
+              <td className="gridActions">
+                {actions.map(({ label, action }) => (
+                  <button key={'action_' + action} onClick={() => action(row)}>
+                    {label}
+                  </button>
+                ))}
               </td>
-            }
+            )}
           </tr>
         ))}
       </tbody>

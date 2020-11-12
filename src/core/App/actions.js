@@ -11,16 +11,16 @@ export function fetchPlanets() {
   };
 }
 
-export function fetchPlanetsSucceeded({ planets }) {
+export function fetchPlanetsSucceeded(response) {
   return {
     type: FETCH_PLANETS_SUCCESS,
-    payload: { planets },
+    payload: response,
   };
 }
 
 export function fetchPlanetsFailed(error) {
   return {
     type: FETCH_PLANETS_ERROR,
-    payload: { error },
+    error: error,
   };
 }

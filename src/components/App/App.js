@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 import Route from './routes';
 import './App.css';
 
-const App = function () {
+const App = function ({ planets, fetchPlanets }) {
   useEffect(() => {
-    console.log('here');
-  }, []);
+    fetchPlanets();
+  }, [fetchPlanets]);
 
+  if (!planets) {
+    return <div>Loading...</div>;
+  }
+
+  console.log('==Loading==');
+  console.log(planets);
   return (
     <div className="App">
       <Route />
@@ -16,7 +22,7 @@ const App = function () {
 };
 
 App.propTypes = {
-  planets: PropTypes.object.isRequired,
+  planets: PropTypes.object,
   fetchPlanets: PropTypes.func.isRequired,
 };
 

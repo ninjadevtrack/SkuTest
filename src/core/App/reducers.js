@@ -13,7 +13,7 @@ const initialState = {
 };
 
 function appReducer(state = initialState, action) {
-  const { error, planets } = action.payload || {};
+  const { payload } = action || {};
 
   switch (action.type) {
     case FETCH_PLANETS:
@@ -31,7 +31,7 @@ function appReducer(state = initialState, action) {
         planets: {
           loading: false,
           error: false,
-          data: planets,
+          data: payload,
         },
       };
     case FETCH_PLANETS_ERROR:
@@ -39,7 +39,7 @@ function appReducer(state = initialState, action) {
         ...state,
         planets: {
           loading: false,
-          error,
+          error: payload,
           data: null,
         },
       };

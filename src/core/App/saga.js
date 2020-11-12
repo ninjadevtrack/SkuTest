@@ -1,10 +1,6 @@
 import { put, call, fork, takeLatest } from 'redux-saga/effects';
 import { FETCH_PLANETS } from './constants';
-import {
-  fetchPlanets,
-  fetchPlanetsSucceeded,
-  fetchPlanetsFailed,
-} from './actions';
+import { fetchPlanetsSucceeded, fetchPlanetsFailed } from './actions';
 
 import request, { makeJsonRequestOptions } from 'utils/request';
 
