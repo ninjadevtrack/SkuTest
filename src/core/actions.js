@@ -1,13 +1,5 @@
-import * as CONSTANTS from './constants';
+import * as fetchPlanets from './Planets/actions';
 
-const loadAllPlanets = () => {
-  return {
-    type: CONSTANTS.LOAD_PLANETS,
-  }
+export default {
+  fetchPlanets,
 };
-
-const actions = {
-  loadAllPlanets,
-};
-
-export default actions;

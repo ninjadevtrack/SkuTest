@@ -1,13 +1,28 @@
-import { createStore } from 'redux';
-import reducer from './reducer';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { routerMiddleware } from 'connected-react-router';
+import createSagaMiddleware from 'redux-saga';
+import createReducer from './reducers';
 
-function configureStore(initialState) {
+const sagaMiddleware = createSagaMiddleware();
+
+export default function configureStore(initialState = {}, history) {
+  const middlewares = [sagaMiddleware, routerMiddleware(history)];
+
   const store = createStore(
-    reducer,
+    createReducer(),
     initialState,
+    compose(applyMiddleware(...middlewares))
   );
 
-  return store;
-};
+  store.runSaga = sagaMiddleware.run;
+  store.injectedReducers = {};
+  store.injectedSagas = {};
 
-export default configureStore;
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
+      store.replaceReducer(createReducer(store.injectedReducers));
+    });
+  }
+
+  return store;
+}

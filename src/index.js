@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import history from './history';
-import configureStore from './core/store';
 
-import './index.css';
+import history from './utils/history';
+import configureStore from './core/store';
+import App from './contaners/App';
+
 import * as serviceWorker from './serviceWorker';
-import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import './index.css';
 
 const store = configureStore();
 
