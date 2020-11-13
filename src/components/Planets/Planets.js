@@ -1,10 +1,14 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import './Planets.css';
 import Grid from '../Grid';
 
-function Planets() {
+function Planets({ planets, fetchData, isLoaded, isFetched }) {
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   const data = {
     header: [
       'name',
@@ -210,6 +214,14 @@ function Planets() {
     ],
   };
 
+  if (isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (isFetched) {
+    console.log('===', planets);
+  }
+
   return (
     <div className="App">
       <h1>Star Wars Planets</h1>
@@ -217,5 +229,12 @@ function Planets() {
     </div>
   );
 }
+
+Planets.propTypes = {
+  planets: PropTypes.object,
+  isLoaded: PropTypes.bool,
+  isFetched: PropTypes.bool,
+  fetchData: PropTypes.func.isRequired,
+};
 
 export default Planets;

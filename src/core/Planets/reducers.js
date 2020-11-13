@@ -28,16 +28,6 @@ const fetchPlanetsFulfillRequest = (state, action) => ({
   isLoading: false,
 });
 
-// export default handleActions(
-//   {
-//     [fetchPlanets]: fetchPlanetsRequest,
-//     [fetchPlanetsSuccess]: fetchPlanetsSuccessRequest,
-//     [fetchPlanetsFailed]: fetchPlanetsFailedRequest,
-//     [fetchPlanetsFulfill]: fetchPlanetsFulfillRequest,
-//   },
-//   initialState
-// );
-
 export const initialState = {
   isLoading: false,
   isSuccess: false,
@@ -45,7 +35,7 @@ export const initialState = {
   error: {},
 };
 
-function apartmentListReducer(state = initialState, action) {
+function planetReducer(state = initialState, action) {
   switch (action.type) {
     case fetchPlanets:
       return fetchPlanetsRequest(state, action);
@@ -60,4 +50,4 @@ function apartmentListReducer(state = initialState, action) {
   }
 }
 
-export default apartmentListReducer;
+export default planetReducer;

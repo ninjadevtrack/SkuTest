@@ -4,19 +4,13 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchPlanets } from 'core/App/actions';
-import { makeSelectPlanets } from 'core/App/selectors';
 import saga from 'core/App/saga';
 
 import App from 'components/App';
 
-const mapStateToProps = createStructuredSelector({
-  planets: makeSelectPlanets(),
-});
+const mapStateToProps = createStructuredSelector({});
+const mapDispatchToProps = (dispatch) => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchPlanets: () => dispatch(fetchPlanets()),
-});
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const withSaga = injectSaga({ key: 'app', saga });
 

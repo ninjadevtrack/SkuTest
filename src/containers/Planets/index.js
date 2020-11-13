@@ -1,18 +1,28 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import Planets from 'components/Planets';
 
 import injectSaga from 'utils/injectSaga';
-import actions from 'core/actions';
+import { fetchPlanets } from 'core/Planets/actions';
 import saga from 'core/Planets/saga';
+import {
+  makeSelectPlanets,
+  getLoadingStatus,
+  getFetchingStatus,
+} from 'core/Planets/selectors';
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = createStructuredSelector({
+  planets: makeSelectPlanets(),
+  isLoaded: getLoadingStatus(),
+  isFetched: getFetchingStatus(),
+});
 
-const mapDispatchToProps = {
-  fetchPlanets: actions.planets.fetchPlanets,
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchData: () => dispatch(fetchPlanets()),
+});
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-const withSaga = injectSaga({ key: 'planets', saga });
+const withSaga = injectSaga({ key: 'planet', saga });
 
 export default compose(withSaga, withConnect)(Planets);

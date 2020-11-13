@@ -1,37 +1,37 @@
-import { put, call, fork, takeLatest } from 'redux-saga/effects';
-import { FETCH_PLANETS } from './constants';
-import { fetchPlanetsSucceeded, fetchPlanetsFailed } from './actions';
+import { call, take, put } from 'redux-saga/effects';
+import get from 'lodash/get';
+import * as API from '../../api';
 
-import request, { makeJsonRequestOptions } from 'utils/request';
+import {
+  fetchVersion,
+  fetchVersionSuccess,
+  fetchVersionFailed,
+  fetchVersionFulfill,
+} from './actions';
 
-export function* appApiSaga(options, successHandlers, errorHandler) {
+function* onFetchVersionSaga({ payload } = {}) {
   try {
-    options.headers = {
-      ...options.headers,
-    };
-    const response = yield call(request, options);
-    for (let i = 0; i < successHandlers.length; i++) {
-      yield put(successHandlers[i](response.data));
+    yield put(fetchVersion(payload));
+    const response = yield call(API.fetchPlanets, payload);
+    const data = response.data;
+
+    if (!data) {
+      throw new Error();
     }
-  } catch (err) {
-    const { response: errResponse } = err;
-    yield put(errorHandler(errResponse.data));
+
+    yield put(fetchVersionSuccess(data));
+  } catch (e) {
+    yield put(fetchVersionFailed(get(e, 'response.data')));
+  } finally {
+    yield put(fetchVersionFulfill());
   }
 }
 
-export function* fetchPlanetsHandler() {
-  const options = makeJsonRequestOptions({
-    method: 'GET',
-    requestUrlPath: 'planets',
-  });
-
-  yield call(appApiSaga, options, [fetchPlanetsSucceeded], fetchPlanetsFailed);
-}
-
-export function* fetchPlanetsWatcher() {
-  yield takeLatest(FETCH_PLANETS, fetchPlanetsHandler);
+function* getAppversionOnce() {
+  const action = yield take(fetchVersion);
+  yield call(onFetchVersionSaga, action);
 }
 
 export default function* appMainSaga() {
-  yield fork(fetchPlanetsWatcher);
+  yield call(getAppversionOnce);
 }

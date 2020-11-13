@@ -1,48 +1,23 @@
-import {
-  FETCH_PLANETS,
-  FETCH_PLANETS_SUCCESS,
-  FETCH_PLANETS_ERROR,
-} from './constants';
+// import { handleActions } from 'redux-actions';
 
-const initialState = {
-  planets: {
-    loading: null,
-    error: null,
-    data: null,
-  },
+import { fetchVersion } from './actions';
+
+const fetchVersionHandler = (state, action) => ({
+  ...state,
+  isLoading: true,
+});
+
+export const initialState = {
+  isLoading: false,
+  isSuccess: false,
+  data: {},
+  error: {},
 };
 
 function appReducer(state = initialState, action) {
-  const { payload } = action || {};
-
   switch (action.type) {
-    case FETCH_PLANETS:
-      return {
-        ...state,
-        planets: {
-          loading: true,
-          error: false,
-          data: null,
-        },
-      };
-    case FETCH_PLANETS_SUCCESS:
-      return {
-        ...state,
-        planets: {
-          loading: false,
-          error: false,
-          data: payload,
-        },
-      };
-    case FETCH_PLANETS_ERROR:
-      return {
-        ...state,
-        planets: {
-          loading: false,
-          error: payload,
-          data: null,
-        },
-      };
+    case fetchVersion:
+      return fetchVersionHandler(state, action);
     default:
       return state;
   }
