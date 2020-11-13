@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import './Planets.css';
 import Grid from '../Grid';
 
 const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
+  const history = useHistory();
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -19,6 +21,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
 
   const { count, next, previous, results } = planets;
   const gridData = !!results.length ? results : [];
+
   const gridProps = {
     columns: [
       'name',
@@ -40,15 +43,19 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
       {
         label: 'Go to Films',
         action: (row) => {
-          console.log(`redirect to grid with ${row.films.length} Films`);
+          history.push({
+            pathname: 'planets/' + row.name + '/films',
+            state: { filmUrls: row.films },
+          });
         },
       },
       {
         label: 'Go to Residents',
         action: (row) => {
-          console.log(
-            `redirect to grid with ${row.residents.length} Residents`
-          );
+          history.push({
+            pathname: 'planets/' + row.name + '/residents',
+            state: { residentUrls: row.residents },
+          });
         },
       },
     ],
