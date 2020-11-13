@@ -1,0 +1,178 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
+import { AvForm, AvField, AvGroup } from 'availity-reactstrap-validation';
+import { Button, ModalHeader, ModalBody, ModalFooter, Label } from 'reactstrap';
+import Select from 'react-select';
+
+const FeatureModal = ({ headerLabel, data, onSubmitClick, config }) => {
+  const options = data['terrain']?.map((item) => {
+    return { value: item, label: item };
+  });
+
+  const initialState = {
+    ...data,
+    terrain: !!options ? options[0].value : '',
+  };
+
+  const [state, setState] = useState(initialState);
+  const [selectedOption, setSelectedOption] = useState(
+    !!options ? options[0] : {}
+  );
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const handleDropDownChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setState({ ...state, terrain: selectedOption.value });
+  };
+
+  const onSave = () => {
+    setState(initialState);
+    onSubmitClick();
+  };
+
+  return (
+    <AvForm onValidSubmit={onSave}>
+      <ModalHeader>{headerLabel}</ModalHeader>
+      <ModalBody>
+        {Object.keys(config).map((key) => {
+          const item = config[key];
+          if (config[key]['type'] === 'number') {
+            return (
+              <AvGroup key={'item_' + item.label}>
+                <Label for={key}>{item.label}</Label>
+                <AvField
+                  value={state[key]}
+                  onChange={handleOnChange}
+                  type="number"
+                  name={key}
+                  id={key}
+                  required={true}
+                  min={0}
+                  step={1}
+                />
+              </AvGroup>
+            );
+          }
+          if (config[key]['type'] === 'dropdown') {
+            return (
+              <AvGroup key={'item_' + item.label}>
+                <Label for={key}>{item.label}</Label>
+                <Select
+                  label={key}
+                  name={key}
+                  id={key}
+                  value={selectedOption}
+                  options={options}
+                  onChange={handleDropDownChange}
+                />
+              </AvGroup>
+            );
+          }
+          return (
+            <AvGroup key={'item_' + item.label}>
+              <Label for={key}>{item.label}</Label>
+              <AvField
+                value={state[key]}
+                onChange={handleOnChange}
+                name={key}
+                id={key}
+                required={true}
+              />
+            </AvGroup>
+          );
+        })}
+      </ModalBody>
+      <ModalFooter>
+        <Button color="primary" type="submit">
+          Confirm
+        </Button>
+      </ModalFooter>
+    </AvForm>
+  );
+};
+
+FeatureModal.propTypes = {
+  headerLabel: PropTypes.string,
+  data: PropTypes.object.isRequired,
+  onSubmitClick: PropTypes.func.isRequired,
+  config: PropTypes.shape({
+    name: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    rotation_period: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    orbital_period: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    diameter: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    climate: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    gravity: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    terrain: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+    surface_water: PropTypes.shape({
+      label: PropTypes.string,
+      type: PropTypes.string,
+    }),
+  }),
+};
+
+FeatureModal.defaultProps = {
+  isLoading: false,
+  isOpen: false,
+  headerLabel: 'Feature Modal',
+  config: {
+    name: {
+      label: 'Name',
+      type: 'text',
+    },
+    rotation_period: {
+      label: 'Rotation Period',
+      type: 'number',
+    },
+    orbital_period: {
+      label: 'Orbital Period',
+      type: 'number',
+    },
+    diameter: {
+      label: 'Diameter',
+      type: 'number',
+    },
+    climate: {
+      label: 'climate',
+      type: 'text',
+    },
+    gravity: {
+      label: 'gravity',
+      type: 'text',
+    },
+    terrain: {
+      label: 'terrain',
+      type: 'dropdown',
+    },
+    surface_water: {
+      label: 'surface water',
+      type: 'number',
+    },
+  },
+};
+
+export default FeatureModal;

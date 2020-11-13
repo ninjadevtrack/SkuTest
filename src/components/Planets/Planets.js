@@ -1,15 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import './Planets.css';
 import Grid from '../Grid';
+import FeatureModal from 'components/Form';
+import Rodal from 'rodal';
+import 'rodal/lib/rodal.css';
 
 const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
   const history = useHistory();
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  const [toggleModal, setOpenModal] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  const onEditConfirm = () => {
+    console.log('confirmed==>');
+    setOpenModal(false);
+  };
 
   if (isLoading) {
     return <p>Loading Data...</p>;
@@ -20,6 +30,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
   }
 
   const { count, next, previous, results } = planets;
+  console.log('==>', planets);
   const gridData = !!results.length ? results : [];
   const gridProps = {
     columns: [
@@ -157,6 +168,23 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
         },
         inActive: false,
       },
+      {
+        label: 'Show Modal',
+        action: (row) => {
+          setOpenModal(true);
+          setFormData({
+            name: row.name,
+            rotation_period: Number(row.rotation_period),
+            orbital_period: Number(row.orbital_period),
+            diameter: Number(row.diameter),
+            climate: row.climate,
+            gravity: row.gravity,
+            terrain: row.terrain.split(', '),
+            surface_water: Number(row.surface_water),
+          });
+        },
+        inActive: false,
+      },
     ],
   };
 
@@ -164,6 +192,15 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
     <div className="App">
       <h1>{title}</h1>
       <Grid data={gridData} gridProps={gridProps} />
+      <Rodal
+        visible={toggleModal}
+        width={550}
+        height={550}
+        duration={500}
+        onClose={() => setOpenModal(false)}
+      >
+        <FeatureModal data={formData} onSubmitClick={onEditConfirm} />
+      </Rodal>
     </div>
   );
 };
