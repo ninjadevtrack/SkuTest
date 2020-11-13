@@ -14,7 +14,6 @@ function* onFetchPlanets({ payload } = {}) {
     yield put(fetchPlanets(payload));
     const response = yield call(API.fetchPlanets, payload);
     const data = response.data;
-    console.log('===data===', data);
 
     if (!data) {
       throw new Error();

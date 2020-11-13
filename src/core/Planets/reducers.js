@@ -1,4 +1,4 @@
-// import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 
 import {
   fetchPlanets,
@@ -35,19 +35,12 @@ export const initialState = {
   error: {},
 };
 
-function planetReducer(state = initialState, action) {
-  switch (action.type) {
-    case fetchPlanets:
-      return fetchPlanetsRequest(state, action);
-    case fetchPlanetsSuccess:
-      return fetchPlanetsSuccessRequest(state, action);
-    case fetchPlanetsFailed:
-      return fetchPlanetsFailedRequest(state, action);
-    case fetchPlanetsFulfill:
-      return fetchPlanetsFulfillRequest(state, action);
-    default:
-      return state;
-  }
-}
-
-export default planetReducer;
+export default handleActions(
+  {
+    [fetchPlanets]: fetchPlanetsRequest,
+    [fetchPlanetsSuccess]: fetchPlanetsSuccessRequest,
+    [fetchPlanetsFailed]: fetchPlanetsFailedRequest,
+    [fetchPlanetsFulfill]: fetchPlanetsFulfillRequest,
+  },
+  initialState
+);

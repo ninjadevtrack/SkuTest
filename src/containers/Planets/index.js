@@ -14,7 +14,7 @@ import {
 
 const mapStateToProps = createStructuredSelector({
   planets: makeSelectPlanets(),
-  isLoaded: getLoadingStatus(),
+  isLoading: getLoadingStatus(),
   isFetched: getFetchingStatus(),
 });
 

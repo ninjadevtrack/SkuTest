@@ -1,21 +1,24 @@
 import React from 'react';
 import './Grid.css';
 
-function Grid({ data: { header = [], values = [], actions = [] } }) {
+const Grid = ({
+  data,
+  gridProps: { columns = [], config = {}, actions = [] },
+}) => {
   return (
     <table className="gridTable">
       <thead>
         <tr>
-          {header.map((colName) => (
+          {columns.map((colName) => (
             <th key={colName}>{colName}</th>
           ))}
           {!!actions.length && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
-        {values.map((row, index) => (
+        {data.map((row, index) => (
           <tr key={'column_1' + index}>
-            {header.map((colName) => (
+            {columns.map((colName) => (
               <td key={colName}>{row[colName]}</td>
             ))}
             {!!actions.length && (
@@ -32,6 +35,6 @@ function Grid({ data: { header = [], values = [], actions = [] } }) {
       </tbody>
     </table>
   );
-}
+};
 
 export default Grid;
