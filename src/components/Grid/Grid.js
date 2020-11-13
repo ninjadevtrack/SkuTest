@@ -23,11 +23,17 @@ const Grid = ({
             ))}
             {!!actions.length && (
               <td className="gridActions">
-                {actions.map(({ label, action }) => (
-                  <button key={'action_' + action} onClick={() => action(row)}>
-                    {label}
-                  </button>
-                ))}
+                {actions.map(({ label, action, isInActive }) => {
+                  if (!!isInActive) return null;
+                  return (
+                    <button
+                      key={'action_' + action}
+                      onClick={() => action(row)}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
               </td>
             )}
           </tr>

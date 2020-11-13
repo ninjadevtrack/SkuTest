@@ -21,7 +21,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
 
   const { count, next, previous, results } = planets;
   const gridData = !!results.length ? results : [];
-
+  console.log('===', planets);
   const gridProps = {
     columns: [
       'name',
@@ -55,6 +55,15 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
           history.push({
             pathname: 'planets/' + row.name + '/residents',
             state: { residentUrls: row.residents },
+          });
+        },
+      },
+      {
+        label: 'Go to Detail',
+        action: (row) => {
+          history.push({
+            pathname: 'planets/' + row.name,
+            state: { data: row },
           });
         },
       },
