@@ -10,6 +10,6 @@ export function fetchFilms(ids) {
   return axios.get(`${API_PATH}/films`, { ids: ids });
 }
 
-export function fetchReservations(ids) {
-  return axios.get(`${API_PATH}/reservations`, { ids: ids });
+export function fetchResidents(ids) {
+  return axios.get(`${API_PATH}/people`, { ids: ids });
 }

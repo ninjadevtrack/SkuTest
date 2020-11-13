@@ -4,6 +4,7 @@ import { Container } from 'reactstrap';
 
 import Planets from 'containers/Planets';
 import Films from 'containers/Films';
+import Residents from 'containers/Residents';
 
 const Routes = () => {
   return (
@@ -11,6 +12,11 @@ const Routes = () => {
       <Switch>
         <Route path="/" component={Planets} exact />
         <Route path="/planets/:planet/films" component={Films} exact />
+        <Route
+          path="/planets/:resident/residents"
+          component={Residents}
+          exact
+        />
         <Route component={() => <Redirect to="/" />} />
       </Switch>
     </Container>
