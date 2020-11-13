@@ -3,28 +3,52 @@ import './Grid.css';
 
 const Grid = ({
   data,
-  gridProps: { columns = [], config = {}, actions = [] },
+  gridProps: { columns = [], customFields = [], config = {}, actions = [] },
 }) => {
   return (
     <table className="gridTable">
       <thead>
         <tr>
-          {columns.map((colName) => (
-            <th key={colName}>{colName}</th>
+          {columns.map((column) => (
+            <th key={column.id}>{column.label}</th>
           ))}
-          {!!actions.length && <th>Actions</th>}
+          {customFields.map((column) => (
+            <th key={column.id}>{column.label}</th>
+          ))}
+          {!!config.showAction && !!actions.length && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
         {data.map((row, index) => (
           <tr key={'column_1' + index}>
-            {columns.map((colName) => (
-              <td key={colName}>{row[colName]}</td>
+            {columns.map((column) => (
+              <td
+                key={column.id}
+                style={
+                  column.type === 'number'
+                    ? { textAlign: 'right' }
+                    : { textAlign: 'center' }
+                }
+              >
+                {row[column.field]}
+              </td>
             ))}
-            {!!actions.length && (
+            {customFields.map((column) => (
+              <td
+                key={column.id}
+                style={
+                  column.type === 'number'
+                    ? { textAlign: 'right' }
+                    : { textAlign: 'center' }
+                }
+              >
+                {column.value(row)}
+              </td>
+            ))}
+            {!!config.showAction && !!actions.length && (
               <td className="gridActions">
-                {actions.map(({ label, action, isInActive }) => {
-                  if (!!isInActive) return null;
+                {actions.map(({ label, action, inActive }) => {
+                  if (!!inActive) return null;
                   return (
                     <button
                       key={'action_' + action}

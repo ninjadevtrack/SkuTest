@@ -21,24 +21,111 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
 
   const { count, next, previous, results } = planets;
   const gridData = !!results.length ? results : [];
-  console.log('===', planets);
   const gridProps = {
     columns: [
-      'name',
-      'rotation_period',
-      'orbital_period',
-      'diameter',
-      'climate',
-      'gravity',
-      'terrain',
-      'surface_water',
-      'population',
+      {
+        id: 1,
+        field: 'name',
+        label: 'name',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 2,
+        field: 'rotation_period',
+        label: 'rotation_period',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 3,
+        field: 'orbital_period',
+        label: 'orbital_period',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 4,
+        field: 'diameter',
+        label: 'diameter',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 5,
+        field: 'climate',
+        label: 'climate',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 6,
+        field: 'gravity',
+        label: 'gravity',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 7,
+        field: 'terrain',
+        label: 'terrain',
+        isSortable: false,
+        isHidden: false,
+        type: 'sstring',
+      },
+      {
+        id: 8,
+        field: 'surface_water',
+        label: 'surface_water',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 9,
+        field: 'population',
+        label: 'population',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
     ],
     config: {
       itemCount: count || 0,
       nextPage: next || null,
       prevPage: previous || null,
+      showAction: true,
     },
+    customFields: [
+      {
+        id: 10,
+        field: 'fims_count',
+        label: 'Fims Count',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+        value: (row) => {
+          return row.films?.length;
+        },
+      },
+      {
+        id: 11,
+        field: 'residents_count',
+        label: 'Residents Count',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+        value: (row) => {
+          return row.residents?.length;
+        },
+      },
+    ],
     actions: [
       {
         label: 'Go to Films',
@@ -48,6 +135,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             state: { filmUrls: row.films },
           });
         },
+        inActive: false,
       },
       {
         label: 'Go to Residents',
@@ -57,6 +145,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             state: { residentUrls: row.residents },
           });
         },
+        inActive: false,
       },
       {
         label: 'Go to Detail',
@@ -66,6 +155,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             state: { data: row },
           });
         },
+        inActive: false,
       },
     ],
   };

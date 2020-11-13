@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './PlanetDetail.css';
 
 const PlanetDetail = ({ title, history }) => {
-  const planetInfo = history.location.state.data;
+  const planetInfo = history.location.state?.data;
   return (
     <div className="App">
       <h1>{title}</h1>

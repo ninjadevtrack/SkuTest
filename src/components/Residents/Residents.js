@@ -12,7 +12,7 @@ const Residents = ({
   isFetched,
   history,
 }) => {
-  const residentUrls = history.location.state.residentUrls;
+  const residentUrls = history.location.state?.residentUrls;
   useEffect(() => {
     if (!!residentUrls && residentUrls.length > 0) {
       fetchData({ residentUrls });
@@ -30,17 +30,74 @@ const Residents = ({
   const gridData = residents || [];
   const gridProps = {
     columns: [
-      'name',
-      'height',
-      'mass',
-      'gender',
-      'hair_color',
-      'skin_color',
-      'eye_color',
-      'birth_year',
+      {
+        id: 1,
+        field: 'name',
+        label: 'name',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 2,
+        field: 'height',
+        label: 'height',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 3,
+        field: 'mass',
+        label: 'mass',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 4,
+        field: 'gender',
+        label: 'gender',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 5,
+        field: 'hair_color',
+        label: 'hair_color',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 6,
+        field: 'skin_color',
+        label: 'skin_color',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 7,
+        field: 'eye_color',
+        label: 'eye_color',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 8,
+        field: 'birth_year',
+        label: 'birth_year',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
     ],
     config: {
       itemCount: residentUrls?.length,
+      showAction: false,
     },
   };
 

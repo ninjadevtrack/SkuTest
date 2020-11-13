@@ -5,7 +5,7 @@ import './Films.css';
 import Grid from '../Grid';
 
 const Films = ({ title, films, fetchData, isLoading, isFetched, history }) => {
-  const filmUrls = history.location.state.filmUrls;
+  const filmUrls = history.location.state?.filmUrls;
   useEffect(() => {
     if (!!filmUrls && filmUrls.length > 0) {
       fetchData({ filmUrls });
@@ -23,15 +23,50 @@ const Films = ({ title, films, fetchData, isLoading, isFetched, history }) => {
   const gridData = films || [];
   const gridProps = {
     columns: [
-      'title',
-      'episode_id',
-      'director',
-      'producer',
-      'release_date',
-      'url',
+      {
+        id: 1,
+        field: 'title',
+        label: 'title',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 2,
+        field: 'episode_id',
+        label: 'episode_id',
+        isSortable: false,
+        isHidden: false,
+        type: 'number',
+      },
+      {
+        id: 3,
+        field: 'director',
+        label: 'director',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 4,
+        field: 'producer',
+        label: 'producer',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
+      {
+        id: 5,
+        field: 'release_date',
+        label: 'release_date',
+        isSortable: false,
+        isHidden: false,
+        type: 'string',
+      },
     ],
     config: {
       itemCount: filmUrls?.length,
+      showAction: false,
     },
   };
 
