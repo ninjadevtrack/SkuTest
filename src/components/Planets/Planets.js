@@ -8,7 +8,14 @@ import FeatureModal from 'containers/Form';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 
-const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
+const Planets = ({
+  title,
+  planets,
+  fetchData,
+  isLoading,
+  isFetched,
+  gridProps,
+}) => {
   const history = useHistory();
   useEffect(() => {
     fetchData();
@@ -30,111 +37,15 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
 
   const { count, next, previous, results } = planets;
   const gridData = !!results.length ? results : [];
-  const gridProps = {
-    columns: [
-      {
-        id: 1,
-        field: 'name',
-        label: 'name',
-        isSortable: false,
-        isHidden: false,
-        type: 'string',
-      },
-      {
-        id: 2,
-        field: 'rotation_period',
-        label: 'rotation_period',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-      },
-      {
-        id: 3,
-        field: 'orbital_period',
-        label: 'orbital_period',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-      },
-      {
-        id: 4,
-        field: 'diameter',
-        label: 'diameter',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-      },
-      {
-        id: 5,
-        field: 'climate',
-        label: 'climate',
-        isSortable: false,
-        isHidden: false,
-        type: 'string',
-      },
-      {
-        id: 6,
-        field: 'gravity',
-        label: 'gravity',
-        isSortable: false,
-        isHidden: false,
-        type: 'string',
-      },
-      {
-        id: 7,
-        field: 'terrain',
-        label: 'terrain',
-        isSortable: false,
-        isHidden: false,
-        type: 'sstring',
-      },
-      {
-        id: 8,
-        field: 'surface_water',
-        label: 'surface_water',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-      },
-      {
-        id: 9,
-        field: 'population',
-        label: 'population',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-      },
-    ],
+
+  const newGridProps = {
+    ...gridProps,
     config: {
       itemCount: count || 0,
       nextPage: next || null,
       prevPage: previous || null,
       showAction: true,
     },
-    customFields: [
-      {
-        id: 10,
-        field: 'fims_count',
-        label: 'Fims Count',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-        value: (row) => {
-          return row.films?.length;
-        },
-      },
-      {
-        id: 11,
-        field: 'residents_count',
-        label: 'Residents Count',
-        isSortable: false,
-        isHidden: false,
-        type: 'number',
-        value: (row) => {
-          return row.residents?.length;
-        },
-      },
-    ],
     actions: [
       {
         label: 'Go to Films',
@@ -143,6 +54,9 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             pathname: 'planets/' + row.name + '/films',
             state: { filmUrls: row.films },
           });
+        },
+        status: (row) => {
+          return !!row.films && row.films.length > 0;
         },
         inActive: false,
       },
@@ -154,6 +68,9 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             state: { residentUrls: row.residents },
           });
         },
+        status: (row) => {
+          return !!row.residents && row.residents.length > 0;
+        },
         inActive: false,
       },
       {
@@ -163,6 +80,9 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             pathname: 'planets/' + row.name,
             state: { data: row },
           });
+        },
+        status: (row) => {
+          return true;
         },
         inActive: false,
       },
@@ -181,6 +101,9 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
             surface_water: Number(row.surface_water),
           });
         },
+        status: (row) => {
+          return true;
+        },
         inActive: false,
       },
     ],
@@ -189,7 +112,7 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
   return (
     <div className="App">
       <h1>{title}</h1>
-      <Grid data={gridData} gridProps={gridProps} />
+      <Grid data={gridData} gridProps={newGridProps} />
       <Rodal
         visible={toggleModal}
         width={550}

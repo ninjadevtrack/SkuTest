@@ -21,16 +21,20 @@ const changeFormSuccessHandler = (state, action) => ({
 const changeFormFailedHandler = (state, action) => ({
   ...state,
   error: action.payload,
+  isFailed: true,
 });
 
 const changeFormFulfillHandler = (state, action) => ({
   ...state,
   isLoading: false,
+  isSuccess: false,
+  isFailed: false,
 });
 
 export const initialState = {
   isLoading: false,
   isSuccess: false,
+  isFailed: false,
   data: [],
   error: {},
 };

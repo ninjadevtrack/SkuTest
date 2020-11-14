@@ -47,12 +47,15 @@ const Grid = ({
             ))}
             {!!config.showAction && !!actions.length && (
               <td className="gridActions">
-                {actions.map(({ label, action, inActive }) => {
+                {actions.map(({ label, action, status, inActive }) => {
                   if (!!inActive) return null;
                   return (
                     <button
                       key={'action_' + action}
                       onClick={() => action(row)}
+                      style={
+                        status(row) ? { display: 'block' } : { display: 'none' }
+                      }
                     >
                       {label}
                     </button>
