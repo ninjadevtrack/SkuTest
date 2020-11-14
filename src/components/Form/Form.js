@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { AvForm, AvField, AvGroup } from 'availity-reactstrap-validation';
 import { Button, ModalHeader, ModalBody, ModalFooter, Label } from 'reactstrap';
 import Select from 'react-select';
+import { useToasts } from 'react-toast-notifications';
 
-const FeatureModal = ({ headerLabel, data, onSubmitClick, config }) => {
+const FeatureModal = ({
+  headerLabel,
+  data,
+  onSubmitClick,
+  config,
+  changeForm,
+  isSuccess,
+  isFailed,
+}) => {
+  const { addToast } = useToasts();
   const options = data['terrain']?.map((item) => {
     return { value: item, label: item };
   });
@@ -15,7 +25,7 @@ const FeatureModal = ({ headerLabel, data, onSubmitClick, config }) => {
     terrain: !!options ? options[0].value : '',
   };
 
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState({});
   const [selectedOption, setSelectedOption] = useState(
     !!options ? options[0] : {}
   );
@@ -31,8 +41,32 @@ const FeatureModal = ({ headerLabel, data, onSubmitClick, config }) => {
 
   const onSave = () => {
     setState(initialState);
-    onSubmitClick();
+    console.log('start here');
+    changeForm(state);
   };
+
+  useEffect(() => {
+    setState(initialState);
+  }, [data]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      addToast('Saved Successfully!', {
+        appearance: 'success',
+        autoDismiss: true,
+        autoDismissTimeout: 1500,
+      });
+      onSubmitClick();
+    }
+    if (isFailed) {
+      addToast('Failed!', {
+        appearance: 'error',
+        autoDismiss: true,
+        autoDismissTimeout: 1500,
+      });
+      onSubmitClick();
+    }
+  }, [isSuccess, isFailed]);
 
   return (
     <AvForm onValidSubmit={onSave}>

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import './Planets.css';
 import Grid from '../Grid';
-import FeatureModal from 'components/Form';
+import FeatureModal from 'containers/Form';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 
@@ -17,7 +17,6 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
   const [formData, setFormData] = useState({});
 
   const onEditConfirm = () => {
-    console.log('confirmed==>');
     setOpenModal(false);
   };
 
@@ -30,7 +29,6 @@ const Planets = ({ title, planets, fetchData, isLoading, isFetched }) => {
   }
 
   const { count, next, previous, results } = planets;
-  console.log('==>', planets);
   const gridData = !!results.length ? results : [];
   const gridProps = {
     columns: [
