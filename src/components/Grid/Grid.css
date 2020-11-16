@@ -1,5 +1,4 @@
 .gridTable {
-  /* border: 1px solid #000; */
   width: 100%;
   border-spacing: 0;
   border-collapse: separate;
@@ -9,22 +8,30 @@
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
-  border-bottom: 1px solid #333;
   padding: 5px 10px;
   color: #aaa;
+  vertical-align: middle;
 }
 
 .gridTable tbody tr td {
   padding: 10px;
-  font-size: 16px;
-  font-weight: 400;
-  border-bottom: 1px solid #333;
+  font-size: 14px;
+  vertical-align: middle;
 }
 
-.gridTable tbody tr:hover td {
+.gridTable tbody tr:hover {
+  cursor: pointer;
   background: #f1f1f1;
+}
+
+.gridActions {
+  min-width: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .gridActions button {
   margin: 0 5px;
+  font-size: 12px;
 }

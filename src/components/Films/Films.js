@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Films.css';
 import Grid from '../Grid';
+import { Container, Spinner } from 'react-bootstrap';
 
 const Films = ({ title, films, fetchData, isLoading, isFetched, history }) => {
   const filmUrls = history.location.state?.filmUrls;
@@ -13,11 +14,29 @@ const Films = ({ title, films, fetchData, isLoading, isFetched, history }) => {
   }, [filmUrls, fetchData]);
 
   if (isLoading) {
-    return <p>Loading Data...</p>;
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
+        &nbsp;&nbsp;
+        <p>Loading...</p>
+      </Container>
+    );
   }
 
   if (!isFetched) {
-    return <p>Fetching Data...</p>;
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
+        &nbsp;&nbsp;
+        <p>Fetching...</p>
+      </Container>
+    );
   }
 
   const gridData = films || [];

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { Container, Spinner } from 'react-bootstrap';
 
 import './Planets.css';
 import Grid from '../Grid';
@@ -28,11 +29,29 @@ const Planets = ({
   };
 
   if (isLoading) {
-    return <p>Loading Data...</p>;
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
+        &nbsp;&nbsp;
+        <p>Loading...</p>
+      </Container>
+    );
   }
 
   if (!isFetched) {
-    return <p>Fetching Data...</p>;
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
+        &nbsp;&nbsp;
+        <p>Fetching...</p>
+      </Container>
+    );
   }
 
   const { count, next, previous, results } = planets;
@@ -59,6 +78,7 @@ const Planets = ({
           return !!row.films && row.films.length > 0;
         },
         inActive: false,
+        color: 'primary',
       },
       {
         label: 'Go to Residents',
@@ -72,6 +92,7 @@ const Planets = ({
           return !!row.residents && row.residents.length > 0;
         },
         inActive: false,
+        color: 'success',
       },
       {
         label: 'Go to Detail',
@@ -85,6 +106,7 @@ const Planets = ({
           return true;
         },
         inActive: false,
+        color: 'warning',
       },
       {
         label: 'Show Modal',
@@ -105,6 +127,7 @@ const Planets = ({
           return true;
         },
         inActive: false,
+        color: 'danger',
       },
     ],
   };
@@ -116,7 +139,7 @@ const Planets = ({
       <Rodal
         visible={toggleModal}
         width={550}
-        height={550}
+        height={750}
         duration={500}
         onClose={() => setOpenModal(false)}
       >

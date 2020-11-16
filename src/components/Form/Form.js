@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { AvForm, AvField, AvGroup } from 'availity-reactstrap-validation';
-import { Button, ModalHeader, ModalBody, ModalFooter, Label } from 'reactstrap';
+import {
+  Button,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Label,
+  // Col,
+} from 'reactstrap';
 import Select from 'react-select';
 import { useToasts } from 'react-toast-notifications';
+import './Form.css';
 
 const FeatureModal = ({
   headerLabel,
@@ -69,7 +77,7 @@ const FeatureModal = ({
   }, [isSuccess, isFailed]);
 
   return (
-    <AvForm onValidSubmit={onSave}>
+    <AvForm onValidSubmit={onSave} className="form-container">
       <ModalHeader>{headerLabel}</ModalHeader>
       <ModalBody>
         {Object.keys(config).map((key) => {
@@ -119,12 +127,10 @@ const FeatureModal = ({
             </AvGroup>
           );
         })}
-      </ModalBody>
-      <ModalFooter>
         <Button color="primary" type="submit">
           Confirm
         </Button>
-      </ModalFooter>
+      </ModalBody>
     </AvForm>
   );
 };

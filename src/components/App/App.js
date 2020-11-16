@@ -117,7 +117,7 @@ const App = function () {
   };
 
   return (
-    <Container>
+    <Container className="d-flex justify-content-center align-items-center">
       <Switch>
         <Route
           path="/"

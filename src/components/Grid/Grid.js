@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table, Button } from 'react-bootstrap';
 import './Grid.css';
 
 const Grid = ({
@@ -6,7 +7,7 @@ const Grid = ({
   gridProps: { columns = [], customFields = [], config = {}, actions = [] },
 }) => {
   return (
-    <table className="gridTable">
+    <Table responsive className="table table-striped table-bordered gridTable">
       <thead>
         <tr>
           {columns.map((column) => (
@@ -46,11 +47,14 @@ const Grid = ({
               </td>
             ))}
             {!!config.showAction && !!actions.length && (
-              <td className="gridActions">
-                {actions.map(({ label, action, status, inActive }) => {
+              <td className="w-100 gridActions">
+                {actions.map(({ label, action, status, inActive, color }) => {
                   if (!!inActive) return null;
                   return (
-                    <button
+                    <Button
+                      variant={color}
+                      size="sm"
+                      className="m-1"
                       key={'action_' + action}
                       onClick={() => action(row)}
                       style={
@@ -58,7 +62,7 @@ const Grid = ({
                       }
                     >
                       {label}
-                    </button>
+                    </Button>
                   );
                 })}
               </td>
@@ -66,7 +70,7 @@ const Grid = ({
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Container, Spinner } from 'react-bootstrap';
 
 import './Residents.css';
 import Grid from '../Grid';
@@ -20,11 +21,29 @@ const Residents = ({
   }, [residentUrls, fetchData]);
 
   if (isLoading) {
-    return <p>Loading Data...</p>;
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
+        &nbsp;&nbsp;
+        <p>Loading...</p>
+      </Container>
+    );
   }
 
   if (!isFetched) {
-    return <p>Fetching Data...</p>;
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
+        &nbsp;&nbsp;
+        <p>Fetching...</p>
+      </Container>
+    );
   }
 
   const gridData = residents || [];
