@@ -65,7 +65,7 @@ const App = function () {
         label: 'terrain',
         isSortable: false,
         isHidden: false,
-        type: 'sstring',
+        type: 'string',
       },
       {
         id: 8,
